@@ -1,4 +1,4 @@
-package com.datastructures.queue;
+package com.datastructures.trie;
 
 class TrieNode
 {
