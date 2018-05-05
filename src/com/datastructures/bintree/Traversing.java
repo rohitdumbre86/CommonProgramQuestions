@@ -49,7 +49,7 @@ public class Traversing {
 		while (!stack.isEmpty()) {
 			BinaryTree preOrder = stack.pop();
 			System.out.print(" " + preOrder.getValue());
-			
+
 			if (preOrder.getRight() != null) {
 				stack.push(preOrder.getRight());
 			}
@@ -57,13 +57,96 @@ public class Traversing {
 			if (preOrder.getLeft() != null) {
 				stack.push(preOrder.getLeft());
 			}
-			
+
 		}
 
 	}
 	
-	private static void iterativePostorder(BinaryTree root, int n) throws Exception {
-		//TODO
+	private static void iterativePostorder1Stack(BinaryTree root, int n) throws Exception {
+		
+		Stack<BinaryTree> stack = new Stack<BinaryTree>(n);
+		stack.push(root);
+
+		BinaryTree prev = null;
+		
+		while(!stack.isEmpty())
+		{
+			BinaryTree curr = stack.peek();
+			
+			// go down the tree.
+            //check if current node is leaf, if so, process it and pop stack,
+            //otherwise, keep going down
+			if(prev==null || prev.getLeft()==curr || prev.getRight()==curr)
+			{
+				if(curr.getLeft()!=null)
+				{
+				   stack.push(curr.getLeft());
+				}
+				else if(curr.getRight()!=null)
+				{
+					stack.push(curr.getRight());
+				}
+				else 
+				{
+					BinaryTree leaf = stack.pop();
+					System.out.print(" "+leaf.getValue());
+				}
+			}
+			 //go up the tree from left node    
+            //need to check if there is a right child
+            //if yes, push it to stack
+            //otherwise, process parent and pop stack
+			else if(curr.getLeft()==prev)
+			{
+				if(curr.getRight()!=null)
+				{
+					stack.push(curr.getRight());
+				}
+				else 
+				{
+					BinaryTree noRight = stack.pop();
+					System.out.print(" "+noRight.getValue());
+				}
+			}
+			 //go up the tree from right node 
+            //after coming back from right node, process parent node and pop stack. 
+			else if(curr.getRight()==prev)
+			{
+				BinaryTree middleNode = stack.pop();
+				System.out.print(" "+middleNode.getValue());
+			}
+			
+			prev = curr;
+		}
+		
+	}
+
+	private static void iterativePostorder2Stack(BinaryTree root, int n) throws Exception {
+
+		Stack<BinaryTree> stack1 = new Stack<BinaryTree>(n);
+		Stack<BinaryTree> stack2 = new Stack<BinaryTree>(n);
+		
+		stack1.push(root);
+		
+		while(!stack1.isEmpty())
+		{
+		   root = stack1.pop();
+		   stack2.push(root);
+		   if(root.getLeft()!=null)
+		   {
+			  stack1.push(root.getLeft());
+		   }
+		   if(root.getRight()!=null)
+		   {
+			  stack1.push(root.getRight());
+		   }   
+		}
+		
+		while(!stack2.isEmpty())
+		{
+			System.out.print(" "+stack2.pop().getValue());
+		}
+
 		
 	}
 
@@ -115,7 +198,6 @@ public class Traversing {
 		for (int i = 0; i < arr.length; i++) {
 			arr[i] = i + 1;
 		}
-
 		BinaryTree root = createStandardBinaryTree(arr, 0, arr.length - 1);
 		System.out.print("Root value " + root.getValue() + "\n");
 		System.out.println("Recursive Inorder traversal");
@@ -128,10 +210,10 @@ public class Traversing {
 		iterativeInorder(root, n);
 		System.out.println("\n" + "Iterative Preorder traversal");
 		iterativePreorder(root, n);
-		System.out.println("\n" + "Iterative Postorder traversal");
-		iterativePostorder(root, n);
+		System.out.println("\n" + "Iterative Postorder traversal with 1 stack");
+		iterativePostorder1Stack(root, n);
+		System.out.println("\n" + "Iterative Postorder traversal with 2 stack");
+		iterativePostorder2Stack(root, n);
 	}
-
-
 
 }
