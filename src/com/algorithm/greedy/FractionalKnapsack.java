@@ -1,6 +1,7 @@
 package com.algorithm.greedy;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Scanner;
 
 /**
@@ -22,20 +23,21 @@ public class FractionalKnapsack
             sacks[i] = new KnapSack(values[i], weights[i]);
         }
 
-        Arrays.sort(sacks, (KnapSack frac1, KnapSack frac2) -> {
+        
+        Arrays.sort(sacks, new Comparator<KnapSack>() {
 
-            double fraction1 = frac1.fraction;
-            double fraction2 = frac2.fraction;
+			@Override
+			public int compare(KnapSack frac1, KnapSack frac2) {
+				
+				double fraction1 = frac1.fraction;
+	            double fraction2 = frac2.fraction;
 
-            if (fraction1 == fraction2)
-                return 0;
-            else if (fraction1 > fraction2)
-                return -1;
-            return 1;
-
-        }
-
-        );
+	            if (fraction1 == fraction2)
+	                return 0;
+	            else if (fraction1 > fraction2)
+	                return -1;
+	            return 1;
+			}});
         
         int currentWeight = 0;
         
