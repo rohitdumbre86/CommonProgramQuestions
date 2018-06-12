@@ -58,7 +58,7 @@ public class MinHeap {
 	
 	public int peek() {
 		int low = heap[0];
-		heap[0] = heap[size];
+		heap[0] = size==heap.length ?  heap[size-1] : heap[size];
 		size--;
 		heapifyDown();
 		return low;
@@ -106,6 +106,9 @@ public class MinHeap {
 		minHeap.add(11);
 		minHeap.add(24);
 		
+		System.out.println(minHeap.peek());
+		System.out.println(minHeap.peek());
+		System.out.println(minHeap.peek());
 		System.out.println(minHeap.peek());
 		System.out.println(minHeap.peek());
 		System.out.println(minHeap.peek());
