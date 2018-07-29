@@ -22,22 +22,9 @@ public class FractionalKnapsack
         {
             sacks[i] = new KnapSack(values[i], weights[i]);
         }
-
         
-        Arrays.sort(sacks, new Comparator<KnapSack>() {
-
-			@Override
-			public int compare(KnapSack frac1, KnapSack frac2) {
-				
-				double fraction1 = frac1.fraction;
-	            double fraction2 = frac2.fraction;
-
-	            if (fraction1 == fraction2)
-	                return 0;
-	            else if (fraction1 > fraction2)
-	                return -1;
-	            return 1;
-			}});
+        Arrays.sort(sacks, (KnapSack knap1, KnapSack knap2)-> {return Double.compare(knap1.fraction,knap2.fraction);
+			});
         
         int currentWeight = 0;
         

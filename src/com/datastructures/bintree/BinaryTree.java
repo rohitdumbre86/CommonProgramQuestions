@@ -1,6 +1,6 @@
 package com.datastructures.bintree;
 
-public class BinaryTree {
+public class BinaryTree implements Cloneable{
 	private int value;
 	private BinaryTree left;
 	private BinaryTree right;
@@ -33,6 +33,12 @@ public class BinaryTree {
 
 	public void setRight(BinaryTree right) {
 		this.right = right;
+	}
+	
+	@Override
+	public BinaryTree clone() throws CloneNotSupportedException
+	{
+		return (BinaryTree) super.clone();
 	}
 
 }

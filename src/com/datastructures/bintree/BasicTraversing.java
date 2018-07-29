@@ -8,14 +8,14 @@ import com.datastructures.stack.Stack;
  * @author rdumb
  *
  */
-public class Traversing {
+public class BasicTraversing {
 
-	private static void iterativeInorder(BinaryTree root, int n) throws Exception {
+	protected static void iterativeInorder(BinaryTree root) throws Exception {
 
 		if (root == null)
 			return;
 
-		Stack<BinaryTree> stack = new Stack<BinaryTree>(n);
+		Stack<BinaryTree> stack = new Stack<BinaryTree>();
 
 		BinaryTree temp = root;
 
@@ -38,7 +38,7 @@ public class Traversing {
 
 	}
 
-	private static void iterativePreorder(BinaryTree root, int n) throws Exception {
+	protected static void iterativePreorder(BinaryTree root, int n) throws Exception {
 
 		if (root == null)
 			return;
@@ -62,7 +62,7 @@ public class Traversing {
 
 	}
 	
-	private static void iterativePostorder1Stack(BinaryTree root, int n) throws Exception {
+	protected static void iterativePostorder1Stack(BinaryTree root, int n) throws Exception {
 		
 		Stack<BinaryTree> stack = new Stack<BinaryTree>(n);
 		stack.push(root);
@@ -121,7 +121,7 @@ public class Traversing {
 		
 	}
 
-	private static void iterativePostorder2Stack(BinaryTree root, int n) throws Exception {
+	protected static void iterativePostorder2Stack(BinaryTree root, int n) throws Exception {
 
 		Stack<BinaryTree> stack1 = new Stack<BinaryTree>(n);
 		Stack<BinaryTree> stack2 = new Stack<BinaryTree>(n);
@@ -150,7 +150,7 @@ public class Traversing {
 		
 	}
 
-	private static void recursiveInorder(BinaryTree root) {
+	protected static void recursiveInorder(BinaryTree root) {
 		if (root != null) {
 			recursiveInorder(root.getLeft());
 			System.out.print(" " + root.getValue());
@@ -158,7 +158,7 @@ public class Traversing {
 		}
 	}
 
-	private static void recursivePreorder(BinaryTree root) {
+	protected static void recursivePreorder(BinaryTree root) {
 		if (root != null) {
 			System.out.print(" " + root.getValue());
 			recursivePreorder(root.getLeft());
@@ -167,7 +167,7 @@ public class Traversing {
 
 	}
 
-	private static void recursivePostorder(BinaryTree root) {
+	protected static void recursivePostorder(BinaryTree root) {
 		if (root != null) {
 			recursivePostorder(root.getLeft());
 			recursivePostorder(root.getRight());
@@ -176,7 +176,7 @@ public class Traversing {
 
 	}
 
-	private static BinaryTree createStandardBinaryTree(int[] arr, int left, int right) {
+	protected static BinaryTree createStandardBinaryTree(int[] arr, int left, int right) {
 
 		if (left > right) {
 			return null;
@@ -207,7 +207,7 @@ public class Traversing {
 		System.out.println("\n" + "Recursive Postorder traversal");
 		recursivePostorder(root);
 		System.out.println("\n" + "Iterative Inorder traversal");
-		iterativeInorder(root, n);
+		iterativeInorder(root);
 		System.out.println("\n" + "Iterative Preorder traversal");
 		iterativePreorder(root, n);
 		System.out.println("\n" + "Iterative Postorder traversal with 1 stack");
