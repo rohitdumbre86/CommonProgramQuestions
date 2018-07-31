@@ -28,7 +28,7 @@ public class CommonTraversingTechniquies extends BasicTraversing {
 
 		System.out.println("Mirror images");
 
-		BinaryTree mirrorTree = (BinaryTree) root.clone();
+		BinaryTree mirrorTree = createStandardBinaryTree(arr, 0, arr.length - 1);
 		convertTreeToMirror(mirrorTree);
 
 		List<List<BinaryTree>> listPerLevelReverse = getListPerLevel(mirrorTree);
@@ -45,13 +45,67 @@ public class CommonTraversingTechniquies extends BasicTraversing {
 		System.out.println("Print the border images");
 
 	    printTheBorder(root);
+	    
+	    System.out.println("Find the least common node");
+	    
+	    System.out.println(returnLCAForTwoNodes(root, 3, 9));
+	    System.out.println(returnLCAForTwoNodes(root, 1, 4));
+	    System.out.println(returnLCAForTwoNodes(root, 7, 10));
+	    System.out.println(returnLCAForTwoNodes(root, 2, 11));
+	    System.out.println(returnLCAForTwoNodes(root, 2, 12));
+
 	}
 	
 	public static void printTheBorder(final BinaryTree root)
 	{
+		System.out.print(root.getValue()+" ");
 		printTheLeft(root.getLeft());
 		printTheLeaves(root);
 		printTheRigth(root.getRight());
+	}
+	
+	
+	public static int returnLCAForTwoNodes(BinaryTree root, int valueA, int valueB) {
+		if(root==null) return -1;
+		
+		if(root.getValue()==valueA) {
+			return valueA;
+		}
+		else if(root.getValue()==valueB) {
+			return valueB;
+		}
+		
+		int left = returnLCAForTwoNodes(root.getLeft(), valueA, valueB);
+		int right = returnLCAForTwoNodes(root.getRight(), valueA, valueB);
+		
+		if(left!=-1 && right!=-1) {
+			return root.getValue();
+		}
+		else if(left!=-1) {
+			return left;
+		}
+		
+		return right;
+		
+	}
+	
+	public static void printAllNodesFromRoot(BinaryTree root, int[] path, int len) {
+		if(root==null) return;
+		
+		path[len] = root.getValue();
+		len++;
+		
+		if(root.getLeft()==null && root.getRight()==null) {
+			
+			for(int i=0;i<=len;i++) {
+				//TODO Print stuff
+			}
+			
+			return ;
+		}
+		
+		printAllNodesFromRoot(root.getLeft(), path, len);
+        printAllNodesFromRoot(root.getRight(), path, len);
 	}
 
 	private static void printTheRigth(BinaryTree root) {
