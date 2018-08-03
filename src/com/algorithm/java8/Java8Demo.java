@@ -1,14 +1,11 @@
 package com.algorithm.java8;
 
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Java8Demo {
 
@@ -27,9 +24,15 @@ public class Java8Demo {
 		}).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
 		Map<String, List<Integer>> stringByValues = new HashMap<String, List<Integer>>();
-		stringByValues.put("a", List.of(1, 4, 2, 13, 2, 13, 23, 32, 21, 32));
-		stringByValues.put("b", List.of(11, 44, 2, 13, 25, 13, 231, 32, 23, 32));
-		stringByValues.put("d", List.of(31, 4, 2, 13, 12, 13, 213, 32, 21, 32));
+		
+		List<Integer> list1 = Arrays.asList(1,4,2,13,2,13,23,32,21,32);
+		List<Integer> list2 = Arrays.asList(11,44,2,13,25,13,231,32,23,32);
+		List<Integer> list3 = Arrays.asList(31,4,2,13,12,13,213,32,21,32);
+		
+		
+		stringByValues.put("a", list1);
+		stringByValues.put("b", list2);
+		stringByValues.put("d", list3);
 
 		stringByValues.entrySet().stream().forEach(entry -> Collections.sort(entry.getValue()));
 		
