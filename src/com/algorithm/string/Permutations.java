@@ -1,5 +1,8 @@
 package com.algorithm.string;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Permutations {
 	
 	public static void permutate(String original, String newString) {
@@ -23,7 +26,10 @@ public class Permutations {
 	}
 
 	public static void main(String[] args) {
-		Permutations.permutate("ABCDE", "");
+		List<Long> longs = Arrays.asList(1l,2l,3l);
+	    System.out.println(longs);
+	    Permutations.permutate("ABCDE", "");
+		
 
 	}
 

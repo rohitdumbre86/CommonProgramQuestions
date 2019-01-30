@@ -1,8 +1,10 @@
 package com.datastructures.bintree;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Stack;
 import java.util.TreeMap;
 
@@ -19,10 +21,19 @@ public class CommonBinaryTreeQuestions extends BasicTraversing
         }
         BinaryTree root = createStandardBinaryTree(arr, 0, arr.length - 1);
 
-        System.out.println("Print nodes per level");
-        List<List<BinaryTree>> listPerLevel = getListPerLevel(root);
+        System.out.println("Print nodes per level Recursive");
+        final List<List<BinaryTree>> listPerLevel_1 = getListPerLevel(root);
 
-        for (List<BinaryTree> level : listPerLevel)
+        for (List<BinaryTree> level : listPerLevel_1)
+        {
+            level.forEach(node -> System.out.print(node.getValue() + ":"));
+            System.out.println();
+        }
+
+        System.out.println("Print nodes per level iterative");
+        final List<List<BinaryTree>> listPerLevel_2 = getListPerLevelIterative(root);
+
+        for (List<BinaryTree> level : listPerLevel_2)
         {
             level.forEach(node -> System.out.print(node.getValue() + ":"));
             System.out.println();
@@ -61,15 +72,15 @@ public class CommonBinaryTreeQuestions extends BasicTraversing
         System.out.println(returnLCAForTwoNodes(root, 2, 11));
 
         System.out.println("Get the height of a binary tree");
-        
+
         int heighofBTree = getHeightOfBinaryTree(root);
-        System.out.println("Heigth of BTree "+heighofBTree);
+        System.out.println("Heigth of BTree " + heighofBTree);
         System.out.println("Print all the paths from root");
-        
-        printAllNodesFromRoot(root,new int[heighofBTree+1],0);
-        
+
+        printAllNodesFromRoot(root, new int[heighofBTree + 1], 0);
+
         System.out.println("Print all the vertical sums");
-        Map<Integer,Integer> calculator = new TreeMap<Integer,Integer>();
+        Map<Integer, Integer> calculator = new TreeMap<Integer, Integer>();
         printAllVerticalPathSums(root, 0, calculator);
         calculator.values().stream().forEach(System.out::println);
 
@@ -97,31 +108,35 @@ public class CommonBinaryTreeQuestions extends BasicTraversing
         printTheLeaves(root);
         printTheRigth(root.getRight());
     }
-    
-    
+
     /**
-     * The algorithm is simple 
-     * Do inorder traversal.
-     * When going to left substree decrement level by 1 
-     * if key/level is in tree add the current node to the sum else add a new entry to the map.
+     * The algorithm is simple Do inorder traversal. When going to left substree decrement level by
+     * 1 if key/level is in tree add the current node to the sum else add a new entry to the map.
      * When going to right substree increment level by 1
      */
-    public static void printAllVerticalPathSums(final BinaryTree root,final int level,final Map<Integer,Integer> calculator)
+    public static void printAllVerticalPathSums(final BinaryTree root,
+                                                final int level,
+                                                final Map<Integer, Integer> calculator)
     {
-        if(root==null) {
+        if (root == null)
+        {
             return;
         }
-        
-        printAllVerticalPathSums(root, level-1, calculator);
-        
-        if(calculator.containsKey(level)){
-            calculator.compute(level, (k,v)->v+root.getValue());
-        }else {
+
+        printAllVerticalPathSums(root.getLeft(), level - 1, calculator);
+
+        if (calculator.containsKey(level))
+        {
+            calculator.compute(level, (k, v) -> v + root.getValue());
+        }
+        else
+        {
             calculator.put(level, root.getValue());
         }
-        
-        printAllVerticalPathSums(root, level-1, calculator);
+
+        printAllVerticalPathSums(root.getRight(), level + 1, calculator);
     }
+
     /**
      * Look at the code.
      */
@@ -298,6 +313,49 @@ public class CommonBinaryTreeQuestions extends BasicTraversing
         binaryTreeNodePerLevel(root, 0, listOfNodesPerLevel);
 
         return listOfNodesPerLevel;
+    }
+
+    public static List<List<BinaryTree>> getListPerLevelIterative(final BinaryTree root)
+    {
+
+        Queue<BinaryTree> queue = new LinkedList<BinaryTree>();
+        queue.add(root);
+
+        List<List<BinaryTree>> binNodes = new ArrayList<List<BinaryTree>>();
+
+        while (!queue.isEmpty())
+        {
+
+            int qSize = queue.size();
+            if (qSize == 0)
+            {
+                break;
+            }
+
+            List<BinaryTree> node = new ArrayList<BinaryTree>();
+
+            while (qSize > 0)
+            {
+
+                BinaryTree child = queue.remove();
+                node.add(child);
+
+                if (child.getLeft() != null)
+                {
+                    queue.add(child.getLeft());
+                }
+                if (child.getRight() != null)
+                {
+                    queue.add(child.getRight());
+                }
+
+                qSize--;
+            }
+            binNodes.add(node);
+
+        }
+
+        return binNodes;
     }
 
     /**
